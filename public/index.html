@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080c14">
+  <title>AFK Control | Minecraft Bot</title>
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">
+          <span></span><span></span><span></span><span></span>
+        </span>
+        <span class="brand-copy">
+          <strong>AFK<span>CTRL</span></strong>
+          <small>MINECRAFT BOT MANAGER</small>
+        </span>
+      </a>
+
+      <div class="topbar-right">
+        <span class="local-pill"><i></i> LOCAL DASHBOARD</span>
+        <span class="build-label">v1.0.0</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow">
+          <span class="eyebrow-line"></span>
+          PLAYER AUTOMATION / JAVA EDITION
+        </div>
+
+        <h1>Your server.<br><span>Your bot.</span></h1>
+
+        <p class="hero-copy">
+          Configure the connection, choose the Minecraft version,
+          and send your AFK bot into the world.
+        </p>
+      </section>
+
+      <section class="dashboard-grid">
+        <div class="panel config-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="section-index">01 / CONFIGURATION</span>
+              <h2>Connection setup</h2>
+            </div>
+            <span class="heading-icon">⌁</span>
+          </div>
+
+          <form id="connect-form">
+            <label for="server-address">
+              Server address <span class="required-dot">*</span>
+            </label>
+
+            <div class="input-wrap">
+              <span class="field-icon">⌘</span>
+              <input
+                id="server-address"
+                name="serverAddress"
+                type="text"
+                placeholder="play.example.net:25565"
+                autocomplete="off"
+                maxlength="300"
+                required
+              >
+              <span class="input-suffix">IP / DOMAIN</span>
+            </div>
+
+            <p class="hint">
+              Enter the server IP and port together.
+              The default port is 25565.
+            </p>
+
+            <div class="field-grid">
+              <div class="field-group">
+                <label for="bot-username">
+                  Bot username <span class="required-dot">*</span>
+                </label>
+                <input
+                  id="bot-username"
+                  name="username"
+                  type="text"
+                  placeholder="AFK_Bot"
+                  maxlength="100"
+                  autocomplete="off"
+                  required
+                >
+              </div>
+
+              <div class="field-group">
+                <label for="mc-version">Minecraft version</label>
+                <div class="select-wrap">
+                  <select id="mc-version" name="version">
+                    <option value="auto">Auto-detect</option>
+                    <option value="1.8">1.8</option>
+                    <option value="1.9">1.9</option>
+                    <option value="1.10">1.10</option>
+                    <option value="1.11">1.11</option>
+                    <option value="1.12">1.12</option>
+                    <option value="1.13">1.13</option>
+                    <option value="1.14">1.14</option>
+                    <option value="1.15">1.15</option>
+                    <option value="1.16">1.16</option>
+                    <option value="1.17">1.17</option>
+                    <option value="1.18">1.18</option>
+                    <option value="1.19">1.19</option>
+                    <option value="1.20">1.20</option>
+                    <option value="1.21">1.21</option>
+                    <option value="1.21.9">1.21.9</option>
+                    <option value="1.21.11">1.21.11</option>
+                    <option value="26.1">26.1</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <label class="auth-label">Login method</label>
+
+            <div class="auth-switch" role="radiogroup" aria-label="Login method">
+              <label class="auth-option selected" id="offline-option">
+                <input type="radio" name="auth" value="offline" checked>
+                <span class="auth-symbol">◈</span>
+                <span class="auth-text">
+                  <strong>Offline mode</strong>
+                  <small>Servers that allow offline login</small>
+                </span>
+                <span class="radio-dot"></span>
+              </label>
+
+              <label class="auth-option" id="microsoft-option">
+                <input type="radio" name="auth" value="microsoft">
+                <span class="auth-symbol microsoft-symbol">▦</span>
+                <span class="auth-text">
+                  <strong>Microsoft account</strong>
+                  <small>Java Edition account</small>
+                </span>
+                <span class="radio-dot"></span>
+              </label>
+            </div>
+
+            <p id="auth-hint" class="hint auth-hint">
+              Offline login only works when the server permits it.
+            </p>
+
+            <div class="form-actions">
+              <button
+                id="connect-button"
+                type="submit"
+                class="button button-primary"
+              >
+                <span class="button-dot"></span>
+                <span>Start bot</span>
+                <span class="button-arrow">↗</span>
+              </button>
+
+              <button
+                id="disconnect-button"
+                type="button"
+                class="button button-secondary"
+                disabled
+              >
+                ■ Stop bot
+              </button>
+            </div>
+
+            <p id="form-message" class="form-message" role="status"></p>
+          </form>
+        </div>
+
+        <aside class="right-column">
+          <section class="panel status-panel">
+            <div class="panel-heading compact-heading">
+              <div>
+                <span class="section-index">02 / LIVE STATUS</span>
+                <h2>Bot overview</h2>
+              </div>
+
+              <span id="status-indicator" class="status-indicator status-off">
+                <i></i>
+                <span id="status-label">OFFLINE</span>
+              </span>
+            </div>
+
+            <div class="bot-card">
+              <div class="bot-avatar">
+                <div class="avatar-face">
+                  <span></span>
+                  <span></span>
+                  <b></b>
+                </div>
+                <div class="avatar-shine"></div>
+              </div>
+
+              <div class="bot-card-copy">
+                <strong id="overview-username">AFK_Bot</strong>
+                <span id="overview-server">Not connected to a server</span>
+                <small id="overview-version">VERSION · AUTO</small>
+              </div>
+            </div>
+
+            <div class="stats-row">
+              <div class="stat">
+                <span class="stat-label">SESSION TIME</span>
+                <strong id="uptime-value">00:00:00</strong>
+              </div>
+
+              <div class="stat">
+                <span class="stat-label">BOT POSITION</span>
+                <strong id="position-value">--, --, --</strong>
+              </div>
+            </div>
+
+            <div class="status-note">
+              <span class="pulse-ring"></span>
+              <p id="status-note-text">
+                Waiting for configuration. Your bot is not in-game.
+              </p>
+            </div>
+          </section>
+
+          <section class="panel guide-panel">
+            <div class="guide-title">
+              <span class="guide-icon">i</span>
+              <h3>Before you connect</h3>
+            </div>
+
+            <div class="guide-item">
+              <span class="guide-number">01</span>
+              <p>Enter <b>host:port</b>, such as
+                <code>mc.example.net:25565</code>.</p>
+            </div>
+
+            <div class="guide-item">
+              <span class="guide-number">02</span>
+              <p>Choose the server version or use <b>Auto-detect</b>.</p>
+            </div>
+
+            <div class="guide-item">
+              <span class="guide-number">03</span>
+              <p>Complete Microsoft sign-in in the terminal when prompted.</p>
+            </div>
+
+            <div class="guide-footnote">
+              The dashboard controls a bot running on this computer.
+              Keep the terminal open.
+            </div>
+          </section>
+        </aside>
+      </section>
+
+      <section class="panel logs-panel">
+        <div class="panel-heading logs-heading">
+          <div>
+            <span class="section-index">03 / EVENT STREAM</span>
+            <h2>Connection logs</h2>
+          </div>
+
+          <div class="log-actions">
+            <span id="log-count" class="log-count">0 EVENTS</span>
+            <button id="clear-logs-button" type="button" class="clear-button">
+              Clear logs ↗
+            </button>
+          </div>
+        </div>
+
+        <div id="logs-list" class="logs-list" aria-live="polite">
+          <div class="empty-logs">
+            <span class="empty-log-mark">⌁</span>
+            <span>No events yet. Start the bot to see activity.</span>
+          </div>
+        </div>
+
+        <div class="logs-footer">
+          <span><i class="live-led"></i> LIVE EVENT STREAM</span>
+          <span>Newest events appear below</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>
+        AFK<span class="footer-accent">CTRL</span>
+        <span class="footer-muted"> / MINEFLAYER CONTROL PANEL</span>
+      </span>
+      <span>FOR SERVERS YOU OWN OR ARE ALLOWED TO JOIN</span>
+    </footer>
+  </div>
+</body>
+</html>

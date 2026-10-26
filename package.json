@@ -1,0 +1,17 @@
+{
+  "name": "minecraft-afk-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A local dashboard for controlling a Minecraft AFK bot.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mineflayer": "^4.39.0"
+  }
+}
